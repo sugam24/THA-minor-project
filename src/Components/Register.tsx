@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { EyeIcon } from '@heroicons/react/24/outline';  
+import { EyeIcon } from '@heroicons/react/24/outline'; 
+import { Link } from 'react-router-dom';
 
 const Register_Page = () => {
   interface User {
@@ -16,31 +17,47 @@ const Register_Page = () => {
     email: "",
     password: "",
     confirmPassword: ""
-  })
+  });
 
-  const [submit, setSubmit] = useState<boolean>(false)
-  // State to toggle password visibility
+  const [submit, setSubmit] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false); 
-  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false); 
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setUserDetails((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
+    }));
   }
 
   function handleSubmit(event: React.FormEvent) {
-    setSubmit(true)
+    setSubmit(true);
+  }
+
+  const handleMouseDownPassword = () => {
+    setShowPassword(true);  
+  }
+
+  const handleMouseUpPassword = () => {
+    setShowPassword(false);  
+  }
+
+  const handleMouseDownConfPassword = () => {
+    setShowConfirmPassword(true);  
+  }
+
+  const handleMouseUpConfPassword = () => {
+    setShowConfirmPassword(false);  
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">Create Your Account</h1>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-200 to-teal-200 px-4">
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md space-y-5">
+        <h3 className="text-center text-2xl font-semibold text-gray-800 mb-5">Welcome To Mental Matters</h3>
+        <h3 className="text-center text-lg text-gray-600 mb-4">Create Your Account</h3>
         
-        <div className="space-y-4">
+        <div className="space-y-3">
           <input
             type="text"
             name="firstname"
@@ -48,7 +65,7 @@ const Register_Page = () => {
             value={userDetails.firstname}
             onChange={handleChange}
             placeholder="First Name"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 hover:border-blue-400"
           />
           
           <input
@@ -58,7 +75,7 @@ const Register_Page = () => {
             value={userDetails.lastname}
             onChange={handleChange}
             placeholder="Last Name"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 hover:border-blue-400"
           />
           
           <input
@@ -68,7 +85,7 @@ const Register_Page = () => {
             value={userDetails.email}
             onChange={handleChange}
             placeholder="Email"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 hover:border-blue-400"
           />
           
           <div className="relative">
@@ -79,12 +96,14 @@ const Register_Page = () => {
               value={userDetails.password}
               onChange={handleChange}
               placeholder="Password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 hover:border-blue-400"
             />
             <button
               type="button"
-              onClick={() => setShowPassword(!showPassword)} 
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500"
+              onMouseDown={handleMouseDownPassword}  
+              onMouseUp={handleMouseUpPassword}      
+              onMouseLeave={handleMouseUpPassword}   
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 hover:text-blue-500"
             >
               <EyeIcon className="h-5 w-5" />
             </button>
@@ -98,29 +117,41 @@ const Register_Page = () => {
               value={userDetails.confirmPassword}
               onChange={handleChange}
               placeholder="Confirm Password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 hover:border-blue-400"
             />
             <button
               type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}  
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500"
+              onMouseDown={handleMouseDownConfPassword}  
+              onMouseUp={handleMouseUpConfPassword}      
+              onMouseLeave={handleMouseUpConfPassword}  
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 hover:text-blue-500"
             >
               <EyeIcon className="h-5 w-5" />
             </button>
           </div>
         </div>
 
-        <div className="mt-6">
+        <div className="mt-5">
           <button
             type="submit"
-            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
           >
-            Submit
+            Register
           </button>
+        </div>
+
+        <div className="text-center mt-3">
+          <p className="text-gray-600 text-sm">
+            Already Have An Account?{" "}
+            <br />
+            <Link to="/login" className="text-blue-500 hover:text-blue-700 font-semibold">
+              Login
+            </Link>
+          </p>
         </div>
       </form>
     </div>
-  )
+  );
 }
 
 export default Register_Page;
