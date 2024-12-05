@@ -22,9 +22,24 @@ const Register_Page = () => {
   const [submit, setSubmit] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const[showEyePass, setShowEyePass] = useState<boolean>(false);
+  const[showEyePassConf, setShowEyePassConf] = useState<boolean>(false);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
+    if (name === "password") {
+      if (value !== "") {
+          setShowEyePass(true)
+      } else{
+          setShowEyePass(false)
+      }
+    } else if(name === "confirmPassword") {
+      if (value !== "") {
+        setShowEyePassConf(true)
+      } else{
+        setShowEyePassConf(false)
+      }
+    }
     setUserDetails((prevState) => ({
       ...prevState,
       [name]: value,
@@ -112,7 +127,7 @@ const Register_Page = () => {
               onMouseLeave={handleMouseUpPassword}
               className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 hover:text-teal-500"
             >
-              <EyeIcon className="h-4 w-4" />
+              {showEyePass? <EyeIcon className="h-4 w-4" /> : <></>}
             </button>
           </div>
 
@@ -133,7 +148,7 @@ const Register_Page = () => {
               onMouseLeave={handleMouseUpConfPassword}
               className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 hover:text-teal-500"
             >
-              <EyeIcon className="h-4 w-4" />
+              {showEyePassConf? <EyeIcon className="h-4 w-4" /> : <></>}
             </button>
           </div>
         </div>
