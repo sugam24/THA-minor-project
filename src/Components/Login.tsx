@@ -15,9 +15,17 @@ const Login = () => {
   const [Submit, setSubmit] = useState<boolean>(false);
   const [formErrors, setFormErrors] = useState<any>({});
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showEye, setShowEye] = useState<boolean>(false);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
+    if (name === "password") {
+        if (value !== "") {
+            setShowEye(true)
+        } else{
+            setShowEye(false)
+        }
+    }
     setUserDetails({
       ...userDetails,
       [name]: value,
@@ -88,7 +96,7 @@ const Login = () => {
               onMouseLeave={handleMouseUpPassword}
               className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 hover:text-teal-500"
             >
-              <EyeIcon className="h-4 w-4" />
+               {showEye? <EyeIcon className="h-4 w-4" /> : <></>} 
             </button>
           </div>
         </div>
