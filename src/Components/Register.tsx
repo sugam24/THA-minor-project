@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import { EyeIcon } from '@heroicons/react/24/outline'; 
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { EyeIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 const Register_Page = () => {
   interface User {
-    firstname: string,
-    lastname: string,
-    email: string,
-    password: string,
-    confirmPassword: string,
+    firstname: string;
+    lastname: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
   }
 
   const [userDetails, setUserDetails] = useState<User>({
@@ -16,12 +16,12 @@ const Register_Page = () => {
     lastname: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
   const [submit, setSubmit] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false); 
-  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false); 
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -36,27 +36,34 @@ const Register_Page = () => {
   }
 
   const handleMouseDownPassword = () => {
-    setShowPassword(true);  
-  }
+    setShowPassword(true);
+  };
 
   const handleMouseUpPassword = () => {
-    setShowPassword(false);  
-  }
+    setShowPassword(false);
+  };
 
   const handleMouseDownConfPassword = () => {
-    setShowConfirmPassword(true);  
-  }
+    setShowConfirmPassword(true);
+  };
 
   const handleMouseUpConfPassword = () => {
-    setShowConfirmPassword(false);  
-  }
+    setShowConfirmPassword(false);
+  };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-200 to-teal-200 px-4">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md space-y-5">
-        <h3 className="text-center text-2xl font-semibold text-gray-800 mb-5">Welcome To Mental Matters</h3>
-        <h3 className="text-center text-lg text-gray-600 mb-4">Create Your Account</h3>
-        
+    <div className="min-h-screen bg-gradient-to-r from-blue-200 to-teal-200 px-4 pt-16">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm mx-auto space-y-4"
+      >
+        <h3 className="text-center text-xl font-semibold text-gray-800 mb-4">
+          Welcome To Mental Matters
+        </h3>
+        <h3 className="text-center text-base text-gray-600 mb-3">
+          Create Your Account
+        </h3>
+
         <div className="space-y-3">
           <input
             type="text"
@@ -65,9 +72,9 @@ const Register_Page = () => {
             value={userDetails.firstname}
             onChange={handleChange}
             placeholder="First Name"
-            className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 hover:border-blue-400"
+            className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 hover:border-teal-400"
           />
-          
+
           <input
             type="text"
             name="lastname"
@@ -75,9 +82,9 @@ const Register_Page = () => {
             value={userDetails.lastname}
             onChange={handleChange}
             placeholder="Last Name"
-            className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 hover:border-blue-400"
+            className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 hover:border-teal-400"
           />
-          
+
           <input
             type="email"
             name="email"
@@ -85,48 +92,48 @@ const Register_Page = () => {
             value={userDetails.email}
             onChange={handleChange}
             placeholder="Email"
-            className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 hover:border-blue-400"
+            className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 hover:border-teal-400"
           />
-          
+
           <div className="relative">
             <input
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               name="password"
               id="password"
               value={userDetails.password}
               onChange={handleChange}
               placeholder="Password"
-              className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 hover:border-blue-400"
+              className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 hover:border-teal-400"
             />
             <button
               type="button"
-              onMouseDown={handleMouseDownPassword}  
-              onMouseUp={handleMouseUpPassword}      
-              onMouseLeave={handleMouseUpPassword}   
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 hover:text-blue-500"
+              onMouseDown={handleMouseDownPassword}
+              onMouseUp={handleMouseUpPassword}
+              onMouseLeave={handleMouseUpPassword}
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 hover:text-teal-500"
             >
-              <EyeIcon className="h-5 w-5" />
+              <EyeIcon className="h-4 w-4" />
             </button>
           </div>
-          
+
           <div className="relative">
             <input
-              type={showConfirmPassword ? 'text' : 'password'}
+              type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
               id="confirmPassword"
               value={userDetails.confirmPassword}
               onChange={handleChange}
               placeholder="Confirm Password"
-              className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 hover:border-blue-400"
+              className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 hover:border-teal-400"
             />
             <button
               type="button"
-              onMouseDown={handleMouseDownConfPassword}  
-              onMouseUp={handleMouseUpConfPassword}      
-              onMouseLeave={handleMouseUpConfPassword}  
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 hover:text-blue-500"
+              onMouseDown={handleMouseDownConfPassword}
+              onMouseUp={handleMouseUpConfPassword}
+              onMouseLeave={handleMouseUpConfPassword}
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 hover:text-teal-500"
             >
-              <EyeIcon className="h-5 w-5" />
+              <EyeIcon className="h-4 w-4" />
             </button>
           </div>
         </div>
@@ -134,7 +141,7 @@ const Register_Page = () => {
         <div className="mt-5">
           <button
             type="submit"
-            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+            className="w-full py-2 bg-teal-500 text-white font-semibold rounded-md hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200"
           >
             Register
           </button>
@@ -144,7 +151,10 @@ const Register_Page = () => {
           <p className="text-gray-600 text-sm">
             Already Have An Account?{" "}
             <br />
-            <Link to="/login" className="text-blue-500 hover:text-blue-700 font-semibold">
+            <Link
+              to="/login"
+              className="text-teal-500 hover:text-teal-700 font-semibold"
+            >
               Login
             </Link>
           </p>
@@ -152,6 +162,6 @@ const Register_Page = () => {
       </form>
     </div>
   );
-}
+};
 
 export default Register_Page;
