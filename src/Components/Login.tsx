@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { EyeIcon } from '@heroicons/react/24/outline'; 
 import { Link } from 'react-router-dom';
-
 const Login = () => {
   interface User {
     email: string;
@@ -32,7 +31,8 @@ const Login = () => {
     });
   }
 
-  function handleLogin(event: any) {
+  async function handleLogin(event: any) {
+    console.log("in handle login")
     setFormErrors(validateForm(userDetails));
     setSubmit(true);
   }

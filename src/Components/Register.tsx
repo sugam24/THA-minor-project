@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Register_Page = () => {
   interface User {
@@ -46,7 +47,8 @@ const Register_Page = () => {
     }));
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
+    await axios.post('http://localhost:5000/api/post_data', userDetails)
     setSubmit(true);
   }
 
