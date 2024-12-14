@@ -47,9 +47,56 @@ const Register_Page = () => {
     }));
   }
 
+  function validateForm(user: User) {
+    const error: User = {
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    };
+    const regex = /^[^\s+@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!user.firstname) {
+      error.firstname = "First Name is required";
+    }
+    if (!user.lastname) {
+      error.lastname = "Last Name is required";
+    }
+    if (!user.email) {
+      error.email = "Email is required";
+    } else if (!regex.test(user.email)) {
+      error.email = "This is not a valid email format!";
+    }
+    if (!user.password) {
+      error.password = "Password is required";
+    } else if (user.password.length < 4) {
+      error.password = "Password must be more than 4 characters";
+    } else if (user.password.length > 10) {
+      error.password = "Password cannot exceed more than 10 characters";
+    }
+    if (!user.confirmPassword) {
+      error.confirmPassword = "Confirm Password is required";
+    } else if (user.confirmPassword !== user.password) {
+      error.confirmPassword = "Confirm password and password should be same";
+    }
+    return error;
+  }
+
   async function handleSubmit(event: React.FormEvent) {
-    await axios.post('http://localhost:5000/api/post_data', userDetails)
-    setSubmit(true);
+    event.preventDefault()
+    let errors = validateForm(userDetails)
+    if (Object.values(errors).some((error) => error !== "")) {
+      console.log(errors)
+      setSubmit(false)
+      return
+    }
+    try {
+        await axios.post('http://localhost:5000/api/post_data', userDetails)
+        setSubmit(true);
+    } catch(error) {
+        console.error("couldnot register the user", error)
+        setSubmit(false)
+    }
   }
 
   const handleMouseDownPassword = () => {
