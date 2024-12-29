@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { EyeIcon } from '@heroicons/react/24/outline'; 
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 const Login = () => {
   interface User {
     email: string;
@@ -34,7 +36,18 @@ const Login = () => {
   async function handleLogin(event: any) {
     console.log("in handle login")
     setFormErrors(validateForm(userDetails));
-    setSubmit(true);
+    if(Object.values(formErrors).some((error) => error !== "")) {
+      console.log(formErrors)
+      setSubmit(false)
+      return
+    }
+    try{
+      await axios.post('http://localhost:5000/api/post_login_data', userDetails)
+      setSubmit(true);
+    } catch(error) {
+      console.error("couldnot login the user")
+      setSubmit(false)
+    }
   }
 
   function validateForm(user: User) {

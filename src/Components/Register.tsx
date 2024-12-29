@@ -91,7 +91,7 @@ const Register_Page = () => {
       return
     }
     try {
-        await axios.post('http://localhost:5000/api/post_data', userDetails)
+        await axios.post('http://localhost:5000/api/post_register_data', userDetails)
         setSubmit(true);
     } catch(error) {
         console.error("couldnot register the user", error)

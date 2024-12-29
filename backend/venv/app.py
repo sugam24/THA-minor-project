@@ -1,5 +1,4 @@
 import flask
-import json
 from flask import jsonify, request
 from flask_cors import CORS
 import database_con as db
@@ -12,8 +11,8 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 CORS(app)
 
-@app.route('/api/post_data', methods=['POST'])
-def post_data():
+@app.route('/api/post_register_data', methods=['POST'])
+def post_register_data():
     data = request.get_json()
 
     first_name = data.get('firstname')
@@ -65,6 +64,16 @@ def get_data(id):
     else:
         # If the ID is not found
         return jsonify({'message': 'User not found'}), 404
+    
+@app.route('/api/post_login_data', methods=['POST'])
+def post_login_data():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    print(email, password)
+
+    return jsonify(data), 200
+
 
 # Run the Flask app
 if __name__ == '__main__':
