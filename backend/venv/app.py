@@ -28,7 +28,7 @@ def post_register_data():
             id SERIAL PRIMARY KEY,
             first_name VARCHAR(50),
             last_name VARCHAR(50),
-            email VARCHAR(70),
+            email VARCHAR(70) unique,
             password VARCHAR(50),
             confirm_password VARCHAR(50)
         );
@@ -71,8 +71,23 @@ def post_login_data():
     email = data.get('email')
     password = data.get('password')
     print(email, password)
+    cursor.execute('SELECT * FROM Register WHERE email= %s', (email,))
+    user_data = cursor.fetchone()
+    print("userdata: ", user_data[4])
+    try:
+        if user_data:
+            stored_password = user_data[4]
+            if stored_password == password:
+                response = {'message': 'Login successful'}
+            else:
+                response = {'message': 'Wrong Password'}
+        else:
+             response = {'message':  f'No registered user with email {email}'}
+    except Exception as e:
+        print(f"An error occured: {e}")
+        response = {'message': 'An error occurred', 'error': str(e)}
 
-    return jsonify(data), 200
+    return jsonify(response), 200
 
 
 # Run the Flask app
