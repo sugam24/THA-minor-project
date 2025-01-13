@@ -93,6 +93,15 @@ const Register_Page = () => {
     try {
         await axios.post('http://localhost:5000/api/post_register_data', userDetails)
         setSubmit(true);
+        setUserDetails(
+          {
+            firstname: "",
+            lastname: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          }
+        )
     } catch(error) {
         console.error("couldnot register the user", error)
         setSubmit(false)

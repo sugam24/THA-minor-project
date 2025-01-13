@@ -33,22 +33,54 @@ const Login = () => {
     });
   }
 
+  // async function handleLogin(event: any) {
+  //   event.preventDefault()
+  //   setFormErrors(validateForm(userDetails));
+  //   if(Object.values(formErrors).some((error) => error !== "")) {
+  //     console.log(formErrors)
+  //     setSubmit(false)
+  //     return
+  //   }
+  //   try{
+  //     // const response = await axios.post('http://localhost:5000/api/post_login_data', userDetails)
+  //     // console.log("Response:", response.data)
+  //     await axios.post('http://localhost:5000/api/post_login_data', userDetails)
+  //     setSubmit(true);
+  //   } catch(error) {
+  //     console.error("couldnot login the user")
+  //     setSubmit(false)
+  //   }
+  // }
   async function handleLogin(event: any) {
-    console.log("in handle login")
+    event.preventDefault(); // Prevent default form submission behavior
+    
     setFormErrors(validateForm(userDetails));
-    if(Object.values(formErrors).some((error) => error !== "")) {
-      console.log(formErrors)
-      setSubmit(false)
-      return
+    if (Object.values(formErrors).some((error) => error !== "")) {
+      console.log(formErrors);
+      setSubmit(false);
+      return;
     }
-    try{
-      await axios.post('http://localhost:5000/api/post_login_data', userDetails)
-      setSubmit(true);
-    } catch(error) {
-      console.error("couldnot login the user")
-      setSubmit(false)
+    
+    try {
+      const response = await axios.post('http://localhost:5000/api/post_login_data', userDetails);
+      console.log("Response:", response.data);
+      
+      if (response.data.message === 'Login successful') {
+        setSubmit(true);
+        // You can redirect the user or show a success message
+        alert(response.data.message);
+      } else {
+        setSubmit(false);
+        // Show the message from the server
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error("Could not log in the user");
+      alert("An error occurred while trying to log in.");
+      setSubmit(false);
     }
   }
+  
 
   function validateForm(user: User) {
     const error: User = {
