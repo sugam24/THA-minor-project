@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { EyeIcon } from '@heroicons/react/24/outline'; 
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
+  const navigate = useNavigate();
   interface User {
     email: string;
     password: string;
   }
-
+  
   const [userDetails, setUserDetails] = useState<User>({
     email: "",
     password: "",
@@ -17,7 +19,7 @@ const Login = () => {
   const [formErrors, setFormErrors] = useState<any>({});
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showEye, setShowEye] = useState<boolean>(false);
-
+  
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     if (name === "password") {
@@ -53,11 +55,9 @@ const Login = () => {
           email: "",
           password: "",
         })
-        // redirect the user or show a success message
-        alert(response.data.message);
+        navigate('/');
       } else {
         setSubmit(false);
-        // Show the message from the server
         alert(response.data.message);
       }
     } catch (error) {
@@ -109,7 +109,7 @@ const Login = () => {
             onChange={handleChange}
             placeholder="Enter your email address"
             className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 hover:border-teal-400"
-          />
+            />
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
