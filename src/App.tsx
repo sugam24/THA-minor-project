@@ -10,18 +10,18 @@ import {
   BrowserRouter,
   Routes,
 } from "react-router-dom";
-import NavBar from './Components/NavBar';
+import NavBar from './Components/NavBarLogin';
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <NavBar/>
+
         <Routes>
           <Route path='/' element={<Home/>} />
-          <Route path='register' element= {<Register/>}/>
+          {/* <Route path='register' element= {<Register/>}/> */}
           <Route path='login' element= {<Login/>}/>
-          <Route path = 'landing' element = {<Landing/>}/>
+          {/* <Route path = 'landing' element = {<Landing/>}/> */}
         </Routes>
       </BrowserRouter>
     </>

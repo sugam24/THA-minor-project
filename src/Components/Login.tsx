@@ -3,6 +3,7 @@ import { EyeIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import NavBar from './NavBarRegister';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -94,10 +95,16 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-200 to-teal-200 px-4 pt-16">
+    <div>
+
+      <div>
+        <NavBar/>
+      </div>
+
+    <div className="flex items-center h-screen bg-gradient-to-r">
       <form className="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm mx-auto space-y-4">
         <h1 className="text-xl font-semibold text-center text-gray-800 mb-4">
-          Mental Matters
+          Let’s Get You Logged In
         </h1>
 
         <div className="space-y-3">
@@ -154,6 +161,7 @@ const Login = () => {
           </p>
         </div>
       </form>
+    </div>
     </div>
   );
 };
