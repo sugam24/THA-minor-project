@@ -47,7 +47,7 @@ const Login = () => {
     }
     
     try {
-      const response = await axios.post('http://localhost:5000/api/post_login_data', userDetails);
+      const response = await axios.post('http://127.0.0.1:5000/post_login_data', userDetails);
       console.log("Response:", response.data);
       
       if (response.data.message === 'Login successful') {
@@ -56,14 +56,14 @@ const Login = () => {
           email: "",
           password: "",
         })
-        navigate('/');
+        navigate('/chatbot_interface');
       } else {
         setSubmit(false);
         alert(response.data.message);
       }
     } catch (error) {
       console.error("Could not log in the user");
-      alert("An error occurred while trying to log in.");
+      alert("The username doesn't exists.");
       setSubmit(false);
     }
   }
@@ -114,7 +114,7 @@ const Login = () => {
             id="email"
             value={userDetails.email}
             onChange={handleChange}
-            placeholder="Enter your email address"
+            placeholder="Email address"
             className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 hover:border-teal-400"
             />
           <div className="relative">
@@ -124,7 +124,7 @@ const Login = () => {
               id="password"
               value={userDetails.password}
               onChange={handleChange}
-              placeholder="Enter your password"
+              placeholder="Password"
               className="w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 hover:border-teal-400"
             />
             <button
@@ -154,7 +154,7 @@ const Login = () => {
             Don't have an account?{" "}
             <Link
               className="text-teal-500 hover:text-teal-700 font-semibold"
-              to="/Register"
+              to="/"
             >
               Register Now
             </Link>

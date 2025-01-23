@@ -1,7 +1,7 @@
 import './App.css';
-import Register from './Components/Register';
 import Home from './Components/Home';
 import Login from './Components/Login';
+import Chatbot from './Components/Chatbot';
 
 import {
   BrowserRouter as Router,
@@ -10,7 +10,6 @@ import {
   BrowserRouter,
   Routes,
 } from "react-router-dom";
-import NavBar from './Components/NavBarLogin';
 
 function App() {
   return (
@@ -19,9 +18,8 @@ function App() {
 
         <Routes>
           <Route path='/' element={<Home/>} />
-          {/* <Route path='register' element= {<Register/>}/> */}
           <Route path='login' element= {<Login/>}/>
-          {/* <Route path = 'landing' element = {<Landing/>}/> */}
+          <Route path='chatbot_interface' element= {<Chatbot/>}/>
         </Routes>
       </BrowserRouter>
     </>

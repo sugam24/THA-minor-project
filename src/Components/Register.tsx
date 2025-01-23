@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import NavBar from "./NavBarLogin";
 
 const Register_Page = () => {
   interface User {
@@ -92,7 +91,13 @@ const Register_Page = () => {
       return
     }
     try {
-        await axios.post('http://localhost:5000/api/post_register_data', userDetails)
+      const response = await axios.post('http://127.0.0.1:5000', userDetails,{
+        headers: {
+          "Content-Type": "application/json",  // Set content type to JSON
+        },
+      });
+      console.log("Response from backend:", response.data);
+      alert("Your account is registered \n Now you can login")
         setSubmit(true);
         setUserDetails(
           {
@@ -104,7 +109,7 @@ const Register_Page = () => {
           }
         )
     } catch(error) {
-        console.error("couldnot register the user", error)
+        console.error("Could not register the user", error)
         setSubmit(false)
     }
   }
