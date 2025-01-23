@@ -4,9 +4,7 @@ import Login from './Components/Login';
 import Chatbot from './Components/Chatbot';
 
 import {
-  BrowserRouter as Router,
   Route,
-  Link,
   BrowserRouter,
   Routes,
 } from "react-router-dom";
