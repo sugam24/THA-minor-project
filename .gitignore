@@ -25,3 +25,4 @@ yarn-error.log*
 
 # Ignore settings.py inside the nested backend folder
 backend/backend/settings.py
+/backend/venv
