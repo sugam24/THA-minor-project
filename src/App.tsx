@@ -1,24 +1,23 @@
 import './App.css';
-import Register from './Components/Register';
 import Home from './Components/Home';
 import Login from './Components/Login';
+import Chatbot from './Components/Chatbot';
 
 import {
   Route,
   BrowserRouter,
   Routes,
 } from "react-router-dom";
-import NavBar from './Components/NavBar';
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <NavBar/>
+
         <Routes>
           <Route path='/' element={<Home/>} />
-          <Route path='register' element= {<Register/>}/>
           <Route path='login' element= {<Login/>}/>
+          <Route path='chatbot_interface' element= {<Chatbot/>}/>
         </Routes>
       </BrowserRouter>
     </>
