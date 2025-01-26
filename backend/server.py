@@ -13,51 +13,48 @@ app = flask.Flask(__name__)
 CORS(app)
 
 
-
 # database connection
 def get_database():
     db_url = os.getenv("db_url")
     return psycopg2.connect(db_url)
 
 
-@app.route('/', methods=['POST'])
+@app.route("/", methods=["POST"])
 def post_register_data():
     if request.is_json:
         data = request.get_json()
         print(data)
 
-        firstname = data.get('firstname')
-        lastname = data.get('lastname')
-        email = data.get('email')
-        password = data.get('password')
-        confirmPassword = data.get('confirmPassword')
+        firstname = data.get("firstname")
+        lastname = data.get("lastname")
+        email = data.get("email")
+        password = data.get("password")
+        confirmPassword = data.get("confirmPassword")
 
         # connecting to the database
         connection = get_database()
-        print('connection established successfully!!')
+        print("connection established successfully!!")
 
         # creating a cursor
         cursor = connection.cursor()
 
-
-
-
         # executing the sql queries
 
-        cursor.execute("""
+        cursor.execute(
+            """
             SELECT EXISTS (
                 SELECT 1 
                 FROM information_schema.tables 
                 WHERE table_name = 'useraccount'
             )
-        """)
+        """
+        )
         table_exists = cursor.fetchone()[0]
-
 
         # creating the table
         if not table_exists:
             cursor.execute(
-            """
+                """
                 CREATE TABLE UserAccount(
                    user_id SERIAL PRIMARY KEY,
                     firstname varchar(50) NOT NULL,
@@ -73,23 +70,26 @@ def post_register_data():
             print("The table is creted successfully!! ")
 
         # inserting the values
-        cursor.execute(''' 
+        cursor.execute(
+            """ 
             INSERT INTO UserAccount(firstname, lastname, email, password)
                        VALUES(%s,%s,%s,%s)
-        ''', (firstname, lastname, email, password))
+        """,
+            (firstname, lastname, email, password),
+        )
 
         # commit the changes
         connection.commit()
         cursor.close()
         connection.close()
-        print('Value is inserted')
+        print("Value is inserted")
 
     return jsonify(data)
 
 
-@app.route("/post_login_data", methods=['POST', 'GET'])
+@app.route("/post_login_data", methods=["POST", "GET"])
 def post_login_data():
-    if request.is_json and request.method == 'POST':
+    if request.is_json and request.method == "POST":
         data = request.get_json()
         email = data.get("email")
         password = data.get("password")
@@ -98,7 +98,7 @@ def post_login_data():
         cursor = connection.cursor()
         # Query the database to check if the email exists
         cursor.execute(
-        """ 
+            """ 
             SELECT * FROM UserAccount WHERE email = %s
         """,
             (email,),
@@ -106,20 +106,18 @@ def post_login_data():
         user = cursor.fetchone()
         print(user)
         # If the user exists
-        if user: 
+        if user:
             # Check if the password matches
             stored_password = user[
                 4
             ]  # Assuming the password is at index 4 in the result
             if password == stored_password:
                 firstname = user[1]
-                return jsonify({"message": "Login successful","user":firstname})
+                return jsonify({"message": "Login successful", "user": firstname})
             else:
                 return jsonify({"message": "Invalid credentials"}), 401
         else:
             return jsonify({"message": "User not found"}), 404
-
-
 
     return jsonify({"message": "Invalid request"}), 400
 
@@ -130,17 +128,16 @@ def post_userinput():
         data = request.get_json()
         user_input = data.get("input")
 
-        print(f'The user input is: {user_input}')
+        print(f"The user input is: {user_input}")
 
         chabot_response = get_model_response(user_input)
 
         response = {
-            'user_input':f'{user_input}',
-            'chatbot_response' :f'{chabot_response}'
+            "user_input": f"{user_input}",
+            "chatbot_response": f"{chabot_response}",
         }
 
         return jsonify(response)
-
 
 
 @app.route("/get_username", methods=["GET"])
@@ -150,21 +147,21 @@ def get_username():
 
     # retrieving the username from the database
     cursor.execute(
-        '''
+        """
             SELECT firstname from useraccount
-        '''
+        """
     )
 
     username = cursor.fetchall()
-    print(f'The name of the user registered till now are: {username}')
+    print(f"The name of the user registered till now are: {username}")
 
     connection.commit()
     cursor.close()
     connection.close()
 
-    return jsonify("Users registered till now:",username)
+    return jsonify("Users registered till now:", username)
 
 
 # Run the Flask app
-if __name__ == '__main__':
-    app.run(debug = True)
+if __name__ == "__main__":
+    app.run(debug=True)
