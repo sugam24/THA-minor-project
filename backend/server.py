@@ -1,26 +1,24 @@
 import flask
-import os
-import psycopg2
-
-from dotenv import load_dotenv
 from flask import jsonify, request
 from flask_cors import CORS
+import os
+from dotenv import load_dotenv
+from ml_models.chabot_response import get_model_response
+
+import psycopg2
 
 load_dotenv()
 
 app = flask.Flask(__name__)
 CORS(app)
 
+
+
 # database connection
 def get_database():
-    print("in get database")
-    return psycopg2.connect(
-                database = os.getenv('DB_NAME'),
-                user = os.getenv('DB_USER'),
-                password = os.getenv('DB_PASSWORD'),
-                host = os.getenv('DB_HOST'),
-                port = os.getenv('DB_PORT')
-            )
+    db_url = os.getenv("db_url")
+    return psycopg2.connect(db_url)
+
 
 @app.route('/', methods=['POST'])
 def post_register_data():
@@ -41,7 +39,11 @@ def post_register_data():
         # creating a cursor
         cursor = connection.cursor()
 
+
+
+
         # executing the sql queries
+
         cursor.execute("""
             SELECT EXISTS (
                 SELECT 1 
@@ -64,6 +66,7 @@ def post_register_data():
                     password varchar(50) NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     last_login TIMESTAMP
+
                 )
             """
             )
@@ -84,17 +87,15 @@ def post_register_data():
     return jsonify(data)
 
 
-@app.route("/post_login_data", methods=["POST"])
+@app.route("/post_login_data", methods=['POST', 'GET'])
 def post_login_data():
-    if request.is_json:
+    if request.is_json and request.method == 'POST':
         data = request.get_json()
         email = data.get("email")
         password = data.get("password")
-
         # Connect to the database
         connection = get_database()
         cursor = connection.cursor()
-
         # Query the database to check if the email exists
         cursor.execute(
         """ 
@@ -102,10 +103,8 @@ def post_login_data():
         """,
             (email,),
         )
-
         user = cursor.fetchone()
         print(user)
-
         # If the user exists
         if user: 
             # Check if the password matches
@@ -114,11 +113,13 @@ def post_login_data():
             ]  # Assuming the password is at index 4 in the result
             if password == stored_password:
                 firstname = user[1]
-                return jsonify({"message": "Login successful","name":firstname})
+                return jsonify({"message": "Login successful","user":firstname})
             else:
                 return jsonify({"message": "Invalid credentials"}), 401
         else:
             return jsonify({"message": "User not found"}), 404
+
+
 
     return jsonify({"message": "Invalid request"}), 400
 
@@ -131,11 +132,37 @@ def post_userinput():
 
         print(f'The user input is: {user_input}')
 
+        chabot_response = get_model_response(user_input)
+
         response = {
-            'user_input':f'{user_input}'
+            'user_input':f'{user_input}',
+            'chatbot_response' :f'{chabot_response}'
         }
 
         return jsonify(response)
+
+
+
+@app.route("/get_username", methods=["GET"])
+def get_username():
+    connection = get_database()
+    cursor = connection.cursor()
+
+    # retrieving the username from the database
+    cursor.execute(
+        '''
+            SELECT firstname from useraccount
+        '''
+    )
+
+    username = cursor.fetchall()
+    print(f'The name of the user registered till now are: {username}')
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return jsonify("Users registered till now:",username)
 
 
 # Run the Flask app

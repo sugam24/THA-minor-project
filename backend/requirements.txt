@@ -1,0 +1,6 @@
+Flask
+Flask-CORS
+transformers
+python-dotenv
+torch
+psycopg2-binary
