@@ -21,7 +21,7 @@ def get_model_response(user_input):
 
         response = text_generator(
             user_input,
-            max_length=200,  # Adjust max_length for longer responses
+            max_length=50,  # Adjust max_length for longer responses
             num_return_sequences=1,
             do_sample=True,
             temperature=0.7,

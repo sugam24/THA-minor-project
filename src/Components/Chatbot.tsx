@@ -4,96 +4,94 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 
+
 const Chatbot = () => {
   const iconSize: number = 32
-
+  const [showFirstMessage, setShowFirstMessage] = useState(true)
+  const [conversation, setConversation] = useState<{ sender: string; text: string }[]>([]);
 
   // This is teh user which logged in
 
   const location = useLocation()
 
 
+  // these are the frequently asked sample questions
+  const questions_array: string[] = [
+    "Depression and laziness ...",
+    "I feel worthless in life...",
+    " I don’t think I am doing well lately. I feel anxious every now and then...",
+    "My GPA is less than expected. I don’t feel like working hard now..."
+  ]
 
-  const [usermessages, setUsermessages] = useState<string[]>([])
-
-  const [chatbotmessages, setChatbotmessages] = useState<string[]>([
-    `Hi ${location.state}! How can I help you?`
-  ])
 
   const userInput = useRef<HTMLInputElement>(null)
-
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response1 = await axios.get("http://127.0.0.1:5000/get_username")
-  //       console.log(response1.data)
-
-  //       const response2 = await axios.get("http://127.0.0.1:5000/post_login_data")
-  //       console.log(response2.data)
-  //     }
-  //     catch (error) {
-  //       console.log("Error occurred while fetching the user data", error)
-  //     }
-  //   }
-  //   fetchData()
-  // }, [])
-
 
 
   //ahandling the user input
   const handlebtn = async () => {
     if (userInput.current && userInput.current.value) {
-      const user_input = userInput.current.value
-      console.log(userInput.current.value)
-      console.log("Input is given to the model");
+      const user_input = userInput.current.value;
+      console.log("User Input:", user_input);
 
-      const response = await axios.post('http://127.0.0.1:5000/post_userinput', { input: user_input }, {
-        headers: {
-          "Content-Type": "application/json",  // Set content type to JSON
-        },
-      });
+      // Add user message to conversation history
+      setConversation((prev) => [...prev, { sender: "user", text: user_input }]);
 
-      console.log(response.data)
+      // Clear input field
+      userInput.current.value = "";
 
-      setUsermessages((prevmessage) => {
-        return [...prevmessage, user_input]
-      })
-      setChatbotmessages((prevmessage) => {
-        return [...prevmessage]
-      })
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:5000/post_userinput",
+          { input: user_input },
+          { headers: { "Content-Type": "application/json" } }
+        );
 
+        console.log("Chatbot Response:", response.data.chatbot_response);
 
-      if (userInput.current) {
-        userInput.current.value = ""
+        // Add chatbot response to conversation history
+        setConversation((prev) => [...prev, { sender: "bot", text: response.data.chatbot_response }]);
+      } catch (error) {
+        console.error("Error fetching chatbot response:", error);
       }
     }
   };
 
 
+
+
   return (
     <div className="bg-gray-200 h-screen p-4 flex gap-2 w-full">
 
-      {/* left side bar */}
+      {/* left side questions */}
       <div className="w-1/4 bg-gray-400 rounded-md p-4 flex flex-col">
-        <div className="text-2xl font-semibold mb-4">Chat History</div>
+        <div className="text-2xl font-semibold mb-4">Frequent Questions</div>
         <div className="space-y-2">
-          <button className="w-full bg-gray-300 rounded p-2 text-left">Depression and laziness ...</button>
-          <button className="w-full bg-gray-300 rounded p-2 text-left">I feel worthless in life...</button>
-          <button className="w-full bg-gray-300 rounded p-2 text-left">
-            I don’t think I am doing well lately. I feel anxious every now and then...
-          </button>
-          <button className="w-full bg-gray-300 rounded p-2 text-left">
-            My GPA is less than expected. I don’t feel like working hard now...
-          </button>
+          {
+            questions_array.map((questions, index) => (
+              <ul key={index}>
+                <li>
+                  <button
+                    onClick={() => {
+                      console.log("question is there");
+                      if (userInput.current) {
+                        userInput.current.value = questions;
+                      }
+                    }}
+                    className="w-full bg-gray-300 rounded p-2 text-left"
+                  >
+                    {questions}
+                  </button>
+
+                </li>
+              </ul>
+            ))
+          }
+
         </div>
         <button className="mt-auto flex items-center justify-center gap-2 p-2 bg-gray-300 rounded">
           <FaStar /> Rate Us
         </button>
       </div>
-
-
-
 
 
       {/* right side chatbox */}
@@ -105,29 +103,38 @@ const Chatbot = () => {
         </div>
 
 
+        
+        {/* {`${showFirstMessage === true ? "p-2 text-justify rounded-md min-h-10 w-[50%] bg-gray-50 " : setShowFirstMessage(false) }} */}
+
 
         <div className="flex-grow space-y-4 overflow-y-auto p-4">
           {/* This is how we display the chatbot response */}
 
-          {
-            chatbotmessages.map((item, index) =>
-            (
-              <ul className='list-none' key={index}>
-                <li className='p-2 text-justify rounded-md bg-gray-50 min-h-10 w-[50%]'>{item}</li>
-              </ul>
-            )
-            )
-          }
+
+          <div className="flex-grow space-y-4 overflow-y-auto p-4">
+
+            <div className={`${showFirstMessage === true ? "p-2 text-justify rounded-md min-h-10 w-[50%] bg-gray-50" : setShowFirstMessage(false) } `}>
+            Hi {location.state}! How can I help you?
+            </div>
+
+            <div className="flex-grow space-y-4 overflow-y-auto p-4">
+              {conversation.map((message, index) => (
+                <ul key={index} className="list-none flex flex-col gap-2">
+                  <li
+                    className={`p-2 text-justify rounded-md min-h-10 w-[50%] ${message.sender === "user" ? "bg-gray-400 ml-[50%]" : "bg-gray-50"
+                      }`}
+                  >
+                    {message.text}
+                  </li>
+                </ul>
+              ))}
+            </div>
+
+          </div>
 
 
-          {/* This this how we display the user input */}
-          {
-            usermessages.map((item, index) => (
-              <ul className='list-none flex flex-col gap-2' key={index}>
-                <li className='p-2 text-justify rounded-md bg-gray-400 min-h-10 w-[50%] ml-[50%]'>{item}</li>
-              </ul>
-            ))
-          }
+
+
         </div>
 
 

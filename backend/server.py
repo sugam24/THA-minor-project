@@ -132,6 +132,29 @@ def post_userinput():
 
         chabot_response = get_model_response(user_input)
 
+        # connecting to the database
+        connection = get_database()
+        print("connection established successfully!!")
+
+        # creating a cursor
+        cursor = connection.cursor()
+
+
+        # inserting the values
+        cursor.execute(
+            """ 
+            INSERT INTO interactionlog(user_input, llm_response)
+                       VALUES(%s,%s)
+        """,
+            (user_input, chabot_response),
+        )
+
+        # commit the changes
+        connection.commit()
+        cursor.close()
+        connection.close()
+        print("Value is inserted")
+
         response = {
             "user_input": f"{user_input}",
             "chatbot_response": f"{chabot_response}",
