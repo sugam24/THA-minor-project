@@ -141,19 +141,19 @@ def post_userinput():
 
 
         # inserting the values
-        cursor.execute(
-            """ 
-            INSERT INTO interactionlog(user_input, llm_response)
-                       VALUES(%s,%s)
-        """,
-            (user_input, chabot_response),
-        )
+        # cursor.execute(
+        #     """ 
+        #     INSERT INTO interactionlog(user_input, llm_response)
+        #                VALUES(%s,%s)
+        # """,
+        #     (user_input, chabot_response),
+        # )
 
         # commit the changes
-        connection.commit()
-        cursor.close()
-        connection.close()
-        print("Value is inserted")
+        # connection.commit()
+        # cursor.close()
+        # connection.close()
+        # print("Value is inserted")
 
         response = {
             "user_input": f"{user_input}",

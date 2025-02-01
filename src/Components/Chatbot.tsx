@@ -17,10 +17,9 @@ const Chatbot = () => {
 
   // these are the frequently asked sample questions
   const questions_array: string[] = [
-    "Depression and laziness ...",
-    "I feel worthless in life...",
-    " I don’t think I am doing well lately. I feel anxious every now and then...",
-    "My GPA is less than expected. I don’t feel like working hard now..."
+    "See i am feeling very sleepy day by day what can I do?",
+    "How is it possible to establish a consistent sleep schedule? Are there any medications you can recommend to help with insomnia?",
+    "I'm feeling really down and don't see the point in anything. What's the point of therapy anyway?"
   ]
 
 
