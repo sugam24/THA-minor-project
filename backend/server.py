@@ -185,6 +185,37 @@ def get_username():
     return jsonify("Users registered till now:", username)
 
 
+# handling the rate us feature
+@app.route("/submit_rating", methods=["POST"])
+def submit_rating():
+    if request.is_json:
+        data = request.get_json()
+        rating = data.get("rating")
+
+        connection = get_database()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS Ratings (
+                id SERIAL PRIMARY KEY,
+                rating INTEGER NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
+
+        cursor.execute("INSERT INTO Ratings (rating) VALUES (%s)", (rating,))
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+        return jsonify({"message": "Rating submitted successfully"}), 200
+
+    return jsonify({"error": "Invalid request"}), 400
+
+
 # Run the Flask app
 if __name__ == "__main__":
     app.run(debug=True)

@@ -103,7 +103,7 @@ const Login = () => {
         <NavBar />
       </div>
 
-      <div className="flex items-center h-screen bg-gradient-to-r">
+      <div className="flex items-center h-screen bg-gradient-to-r bg-gray-100">
         <form className="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm mx-auto space-y-4">
           <h1 className="text-xl font-semibold text-center text-gray-800 mb-4">
             Let’s Get You Logged In
