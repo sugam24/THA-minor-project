@@ -12,12 +12,10 @@ load_dotenv()
 app = flask.Flask(__name__)
 CORS(app)
 
-
 # database connection
 def get_database():
     db_url = os.getenv("db_url")
     return psycopg2.connect(db_url)
-
 
 @app.route("/", methods=["POST"])
 def post_register_data():
@@ -39,7 +37,6 @@ def post_register_data():
         cursor = connection.cursor()
 
         # executing the sql queries
-
         cursor.execute(
             """
             SELECT EXISTS (
@@ -47,11 +44,11 @@ def post_register_data():
                 FROM information_schema.tables 
                 WHERE table_name = 'useraccount'
             )
-        """
+            """
         )
         table_exists = cursor.fetchone()[0]
 
-        # creating the table
+        # creating the table if it doesn't exist
         if not table_exists:
             cursor.execute(
                 """
@@ -63,11 +60,10 @@ def post_register_data():
                     password varchar(50) NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     last_login TIMESTAMP
-
                 )
             """
             )
-            print("The table is creted successfully!! ")
+            print("The table is created successfully!! ")
 
         # inserting the values
         cursor.execute(
@@ -86,16 +82,17 @@ def post_register_data():
 
     return jsonify(data)
 
-
 @app.route("/post_login_data", methods=["POST", "GET"])
 def post_login_data():
     if request.is_json and request.method == "POST":
         data = request.get_json()
         email = data.get("email")
         password = data.get("password")
+        
         # Connect to the database
         connection = get_database()
         cursor = connection.cursor()
+
         # Query the database to check if the email exists
         cursor.execute(
             """ 
@@ -105,15 +102,18 @@ def post_login_data():
         )
         user = cursor.fetchone()
         print(user)
+
         # If the user exists
         if user:
-            # Check if the password matches
-            stored_password = user[
-                4
-            ]  # Assuming the password is at index 4 in the result
+            stored_password = user[4]  # Assuming password is at index 4
             if password == stored_password:
-                firstname = user[1]
-                return jsonify({"message": "Login successful", "user": firstname})
+                return jsonify({
+                    "message": "Login successful", 
+                    "user": { 
+                        "id": user[0],  # user_id
+                        "name": f"{user[1]} {user[2]}"  # firstname and lastname combined
+                    }
+                })
             else:
                 return jsonify({"message": "Invalid credentials"}), 401
         else:
@@ -127,33 +127,58 @@ def post_userinput():
     if request.is_json:
         data = request.get_json()
         user_input = data.get("input")
+        user_id = data.get("user_id")  # Get the user_id
 
         print(f"The user input is: {user_input}")
 
         chabot_response = get_model_response(user_input)
 
-        # connecting to the database
         connection = get_database()
         print("connection established successfully!!")
 
         # creating a cursor
         cursor = connection.cursor()
 
+        # executing the sql queries
+        cursor.execute(
+            """
+            SELECT EXISTS (
+                SELECT 1 
+                FROM information_schema.tables 
+                WHERE table_name = 'interactionlog'
+            )
+        """
+        )
+        table_exists = cursor.fetchone()[0]
+
+        # creating the table if it doesn't exist
+        if not table_exists:
+            cursor.execute(
+                """
+                CREATE TABLE interactionlog(
+                   interaction_id SERIAL PRIMARY KEY,
+                    user_input varchar(500),
+                    llm_response varchar(500),
+                    user_id INTEGER REFERENCES UserAccount(user_id) -- Reference to user_id
+                )
+            """
+            )
+            print("The table is created successfully!! ")
 
         # inserting the values
-        # cursor.execute(
-        #     """ 
-        #     INSERT INTO interactionlog(user_input, llm_response)
-        #                VALUES(%s,%s)
-        # """,
-        #     (user_input, chabot_response),
-        # )
+        cursor.execute(
+            """ 
+            INSERT INTO interactionlog(user_input, llm_response, user_id)
+                       VALUES(%s,%s,%s)
+        """,
+            (user_input, chabot_response, user_id),
+        )
 
         # commit the changes
-        # connection.commit()
-        # cursor.close()
-        # connection.close()
-        # print("Value is inserted")
+        connection.commit()
+        cursor.close()
+        connection.close()
+        print("Value is inserted")
 
         response = {
             "user_input": f"{user_input}",
@@ -163,34 +188,12 @@ def post_userinput():
         return jsonify(response)
 
 
-@app.route("/get_username", methods=["GET"])
-def get_username():
-    connection = get_database()
-    cursor = connection.cursor()
-
-    # retrieving the username from the database
-    cursor.execute(
-        """
-            SELECT firstname from useraccount
-        """
-    )
-
-    username = cursor.fetchall()
-    print(f"The name of the user registered till now are: {username}")
-
-    connection.commit()
-    cursor.close()
-    connection.close()
-
-    return jsonify("Users registered till now:", username)
-
-
-# handling the rate us feature
 @app.route("/submit_rating", methods=["POST"])
 def submit_rating():
     if request.is_json:
         data = request.get_json()
         rating = data.get("rating")
+        user_id = data.get("user_id")  # Get the user_id
 
         connection = get_database()
         cursor = connection.cursor()
@@ -198,14 +201,18 @@ def submit_rating():
         cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS Ratings (
-                id SERIAL PRIMARY KEY,
+                rating_id SERIAL PRIMARY KEY,
                 rating INTEGER NOT NULL,
+                user_id INTEGER REFERENCES UserAccount(user_id), -- Reference to user_id
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
             """
         )
 
-        cursor.execute("INSERT INTO Ratings (rating) VALUES (%s)", (rating,))
+        cursor.execute(
+            "INSERT INTO Ratings (rating, user_id) VALUES (%s, %s)",
+            (rating, user_id),
+        )
         connection.commit()
 
         cursor.close()

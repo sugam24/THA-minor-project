@@ -12,6 +12,10 @@ const Chatbot = () => {
   const [rating, setRating] = useState(0);
   const location = useLocation();
 
+  // Access user_id and user_name from location.state passed from login
+  const user_id = location.state?.user_id; // Ensure this is passed from login.tsx
+  const user_name = location.state?.user_name || "User"; // Default to "User" if name is missing
+
   const questions_array: string[] = [
     "See I am feeling very sleepy day by day. What can I do?",
     "How is it possible to establish a consistent sleep schedule?",
@@ -32,7 +36,10 @@ const Chatbot = () => {
       try {
         const response = await axios.post(
           "http://127.0.0.1:5000/post_userinput",
-          { input: user_input },
+          {
+            input: user_input,
+            user_id: user_id // Include the user_id in the request
+          },
           { headers: { "Content-Type": "application/json" } }
         );
 
@@ -58,7 +65,7 @@ const Chatbot = () => {
     setIsRateUs(false);
 
     try {
-      await axios.post("http://127.0.0.1:5000/submit_rating", { rating: rate }, { headers: { "Content-Type": "application/json" } });
+      await axios.post("http://127.0.0.1:5000/submit_rating", { rating: rate, user_id: user_id }, { headers: { "Content-Type": "application/json" } });
       alert("Thank you for your feedback!");
     } catch (error) {
       console.error("Error submitting rating:", error);
@@ -98,7 +105,7 @@ const Chatbot = () => {
         {/* Chat Messages */}
         <div className="flex-grow space-y-4 overflow-y-auto p-4">
           <div className="p-2 text-justify rounded-md min-h-10 w-[50%] bg-gray-50">
-            Hi {location.state}! How can I help you?
+            Hi {user_name}! How can I help you?
           </div>
 
           {conversation.map((message, index) => (

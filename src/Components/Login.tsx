@@ -47,7 +47,7 @@ const Login = () => {
     }
 
     try {
-      // post requests
+      // post requests to login
       const post_response = await axios.post('http://127.0.0.1:5000/post_login_data', userDetails);
       console.log("Response:", post_response.data);
       console.log("The user who logged in was:", post_response.data.user);
@@ -57,19 +57,21 @@ const Login = () => {
         setUserDetails({
           email: "",
           password: "",
-        })
-        navigate('/chatbot_interface', { state: post_response.data.user });
+        });
+
+        // Use user_id and user_name from the response to pass to the next page
+        const userData = post_response.data.user;
+        navigate('/chatbot_interface', { state: { user_id: userData.id, user_name: userData.name } });
       } else {
         setSubmit(false);
         alert(post_response.data.message);
       }
     } catch (error) {
       console.error("Could not log in the user");
-      alert("The username doesn't exists.");
+      alert("The username doesn't exist.");
       setSubmit(false);
     }
   }
-
 
   function validateForm(user: User) {
     const error: User = {
@@ -98,7 +100,6 @@ const Login = () => {
 
   return (
     <div>
-
       <div>
         <NavBar />
       </div>
