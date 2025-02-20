@@ -7,8 +7,7 @@
 - **Pranil Parajuli**  
 - **Raj Simkhada**  
 - **Sugam Dahal**  
-- **Department of Electronics and Computer Engineering**
-- **Thapathali Campus, Kathmandu**
+*Department of Electronics and Computer Engineering, Tribhuvan University, Institute of Engineering, Thapathali Campus, Kathmandu*
 
 ## Project Motivation
 The rapid evolution of artificial intelligence (AI) technologies has opened avenues for addressing critical social challenges, including emotional isolation and loneliness. In a world where people often feel disconnected despite being digitally connected, there is a rising need for innovative solutions that foster emotional support. Many individuals, especially those who live alone or face social challenges, may lack meaningful interactions, resulting in adverse effects on mental health. The motivation for this project arises from the potential of AI to act as a bridge in providing companionship to those in need. Unlike conventional chatbots that deliver transactional responses, a human-companion chatbot focuses on empathy and understanding. This aligns with the increasing demand for AI systems that can analyze emotions and adapt to user sentiments.
