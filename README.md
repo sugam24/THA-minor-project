@@ -4,7 +4,7 @@
 
 ## Team Members
 - **Amrita Shahi** ([@amrita_shahi](https://github.com/amrita_shahi))  
-- **Pranil Parajuli** ([@pranil_parajuli](https://github.com/pranil_parajuli))  
+- **Pranil Parajuli** ([@praniil](https://github.com/praniil))  
 - **Raj Simkhada** ([@RAJ-Git18](https://github.com/RAJ-Git18))  
 - **Sugam Dahal** ([@sugam24](https://github.com/sugam24))  
 *Department of Electronics and Computer Engineering, Tribhuvan University, Institute of Engineering, Thapathali Campus, Kathmandu*
