@@ -30,7 +30,7 @@ The **Interactive Chatbot for Mental Wellbeing** combines a modern frontend buil
 - **Database-Driven Insights**: Stores interactions, feedback, and ratings for future enhancements.
 
 ## Tech Stack
-- **Frontend**: TypeScript, React, Axios, Tailwind CSS (assumed for styling based on typical usage)
+- **Frontend**: TypeScript, React, Axios, Tailwind CSS 
 - **Backend**: Flask, Flask-CORS, Python
 - **Database**: PostgreSQL
 - **Machine Learning**: GPT-2 (fine-tuned), Transformers, PyTorch
