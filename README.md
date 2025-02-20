@@ -3,10 +3,10 @@
 **Interactive Chatbot for Mental Wellbeing** is an innovative AI-powered platform designed to provide empathetic, contextually aware mental health support. Built as a single-repository project, it integrates a TypeScript-based frontend and a Flask-powered backend, leveraging GPT-2 fine-tuned on mental health datasets and PostgreSQL for robust database management. This project was developed to explore the intersection of AI and emotional wellbeing, offering users a safe space to express their concerns and receive supportive responses.
 
 ## Team Members
-- **Amrita Shahi**  
-- **Pranil Parajuli**  
-- **Raj Simkhada**  
-- **Sugam Dahal**  
+- **Amrita Shahi** ([@amrita_shahi](https://github.com/amrita_shahi))  
+- **Pranil Parajuli** ([@pranil_parajuli](https://github.com/pranil_parajuli))  
+- **Raj Simkhada** ([@RAJ-Git18](https://github.com/RAJ-Git18))  
+- **Sugam Dahal** ([@sugam_24](https://github.com/sugam_24))  
 *Department of Electronics and Computer Engineering, Tribhuvan University, Institute of Engineering, Thapathali Campus, Kathmandu*
 
 ## Project Motivation
