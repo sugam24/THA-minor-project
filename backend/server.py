@@ -223,6 +223,67 @@ def submit_rating():
     return jsonify({"error": "Invalid request"}), 400
 
 
+@app.route("/submit_feedback", methods=["POST"])
+def submit_feedback():
+    if request.is_json:
+        data = request.get_json()
+        feedback_message = data.get("feedback")
+        user_id = data.get("user_id")  # Get the user_id
+
+        connection = get_database()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS Feedback (
+                feedback_id SERIAL PRIMARY KEY,
+                feedback_message TEXT NOT NULL,
+                user_id INTEGER REFERENCES UserAccount(user_id), -- Reference to user_id
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
+
+        # Check if feedback already exists for the user
+        cursor.execute(
+            """
+            SELECT feedback_id FROM Feedback WHERE user_id = %s
+            """,
+            (user_id,),
+        )
+        existing_feedback = cursor.fetchone()
+
+        if existing_feedback:
+            # If feedback exists, update the feedback message
+            cursor.execute(
+                """
+                UPDATE Feedback
+                SET feedback_message = %s, created_at = CURRENT_TIMESTAMP
+                WHERE feedback_id = %s
+                """,
+                (feedback_message, existing_feedback[0]),
+            )
+            print("Feedback updated successfully!")
+        else:
+            # If no feedback exists, insert new feedback
+            cursor.execute(
+                """
+                INSERT INTO Feedback (feedback_message, user_id)
+                VALUES (%s, %s)
+                """,
+                (feedback_message, user_id),
+            )
+            print("Feedback inserted successfully!")
+
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        return jsonify({"message": "Feedback submitted successfully"}), 200
+
+    return jsonify({"error": "Invalid request"}), 400
+
+
 # Run the Flask app
 if __name__ == "__main__":
     app.run(debug=True)
