@@ -1,6 +1,9 @@
+```markdown
 # Interactive Chatbot for Mental Wellbeing
 
-**Interactive Chatbot for Mental Wellbeing** is an innovative AI-powered platform designed to provide empathetic, contextually aware mental health support. Built as a single-repository project, it integrates a TypeScript-based frontend and a Flask-powered backend, leveraging GPT-2 fine-tuned on mental health datasets and PostgreSQL for robust database management. This project was developed to explore the intersection of AI and emotional wellbeing, offering users a safe space to express their concerns and receive supportive responses.
+<p style="text-align: justify;">
+  <b>Interactive Chatbot for Mental Wellbeing</b> is an innovative AI-powered platform designed to provide empathetic, contextually aware mental health support. Built as a single-repository project, it integrates a TypeScript-based frontend and a Flask-powered backend, leveraging GPT-2 fine-tuned on mental health datasets and PostgreSQL for robust database management. This project was developed to explore the intersection of AI and emotional wellbeing, offering users a safe space to express their concerns and receive supportive responses.
+</p>
 
 ![Chatbot User Interface](screenshots/chatbot_response.png)
 
@@ -12,14 +15,22 @@
 *Department of Electronics and Computer Engineering, Tribhuvan University, Institute of Engineering, Thapathali Campus, Kathmandu*
 
 ## Project Motivation
-The rapid evolution of artificial intelligence (AI) technologies has opened avenues for addressing critical social challenges, including emotional isolation and loneliness. In a world where people often feel disconnected despite being digitally connected, there is a rising need for innovative solutions that foster emotional support. Many individuals, especially those who live alone or face social challenges, may lack meaningful interactions, resulting in adverse effects on mental health. The motivation for this project arises from the potential of AI to act as a bridge in providing companionship to those in need. Unlike conventional chatbots that deliver transactional responses, a human-companion chatbot focuses on empathy and understanding. This aligns with the increasing demand for AI systems that can analyze emotions and adapt to user sentiments.
+<p style="text-align: justify;">
+  The rapid evolution of artificial intelligence (AI) technologies has opened avenues for addressing critical social challenges, including emotional isolation and loneliness. In a world where people often feel disconnected despite being digitally connected, there is a rising need for innovative solutions that foster emotional support. Many individuals, especially those who live alone or face social challenges, may lack meaningful interactions, resulting in adverse effects on mental health. The motivation for this project arises from the potential of AI to act as a bridge in providing companionship to those in need. Unlike conventional chatbots that deliver transactional responses, a human-companion chatbot focuses on empathy and understanding. This aligns with the increasing demand for AI systems that can analyze emotions and adapt to user sentiments.
+</p>
 
-Recent advancements in natural language processing (NLP), voice sentiment analysis, and transformer-based models like GPT have made it possible to create more human-like interactions. By leveraging these technologies, the project aims to develop a system capable of understanding not only what users say but also how they feel. This approach aspires to bring a level of emotional intelligence to AI systems that has been largely absent in existing solutions.
+<p style="text-align: justify;">
+  Recent advancements in natural language processing (NLP), voice sentiment analysis, and transformer-based models like GPT have made it possible to create more human-like interactions. By leveraging these technologies, the project aims to develop a system capable of understanding not only what users say but also how they feel. This approach aspires to bring a level of emotional intelligence to AI systems that has been largely absent in existing solutions.
+</p>
 
-The project is also inspired by the societal need for accessible mental health support tools. By acting as a virtual companion, the chatbot can help individuals alleviate feelings of loneliness, provide a listening ear, and stimulate meaningful conversations. This motivation underpins the belief that AI, when designed thoughtfully, can contribute positively to mental and emotional wellbeing.
+<p style="text-align: justify;">
+  The project is also inspired by the societal need for accessible mental health support tools. By acting as a virtual companion, the chatbot can help individuals alleviate feelings of loneliness, provide a listening ear, and stimulate meaningful conversations. This motivation underpins the belief that AI, when designed thoughtfully, can contribute positively to mental and emotional wellbeing.
+</p>
 
 ## Project Overview
-The **Interactive Chatbot for Mental Wellbeing** combines a modern frontend built with TypeScript and React, a scalable Flask backend, and a PostgreSQL database to deliver a seamless user experience. The chatbot is fine-tuned on diverse mental health datasets from Hugging Face, enabling it to generate empathetic and relevant responses. Key functionalities include user registration/login, real-time chat, feedback submission, and rating capabilities, all tied together with a robust database architecture.
+<p style="text-align: justify;">
+  The <b>Interactive Chatbot for Mental Wellbeing</b> combines a modern frontend built with TypeScript and React, a scalable Flask backend, and a PostgreSQL database to deliver a seamless user experience. The chatbot is fine-tuned on diverse mental health datasets from Hugging Face, enabling it to generate empathetic and relevant responses. Key functionalities include user registration/login, real-time chat, feedback submission, and rating capabilities, all tied together with a robust database architecture.
+</p>
 
 ### Key Features
 - **Empathetic Chatbot**: Powered by a fine-tuned GPT-2 model, the chatbot provides human-like, supportive responses to user inputs on topics like anxiety, stress, and loneliness.
@@ -166,7 +177,7 @@ Follow these steps to set up the project locally:
    Open `http://localhost:3000` (or your configured port) in your browser.
 
 ## Usage
-- **Register/Login**: Create an account or log in to access the chatbot.
+- **Register/Login**: Create an account or log in to access the chatbot.  
   ![Register page](screenshots/register_page.png)
 - **Chat**: Type a message or select a predefined question to start a conversation.
 - **Feedback/Rating**: Submit feedback or rate the chatbot via the sidebar options.
@@ -225,4 +236,4 @@ This project is licensed under the [MIT License](LICENSE).
 - **ML Layer**: Fine-tuned GPT-2 for response generation.
 
 For more details, explore the repository or contact the team!
-
+```
