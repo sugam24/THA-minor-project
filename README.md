@@ -1,7 +1,3 @@
-Below is a comprehensive `README.md` file for your project, "Interactive Chatbot for Mental Wellbeing." I've ensured that the database section is detailed and clear, as you emphasized, while also covering the frontend, backend, and other aspects of your project. I've drawn inspiration from your seniors' templates but made it unique, professional, and tailored to your project’s essence. I’ve also generated the database schema based on the `server.py` file you provided.
-
----
-
 # Interactive Chatbot for Mental Wellbeing
 
 **Interactive Chatbot for Mental Wellbeing** is an innovative AI-powered platform designed to provide empathetic, contextually aware mental health support. Built as a single-repository project, it integrates a TypeScript-based frontend and a Flask-powered backend, leveraging GPT-2 fine-tuned on mental health datasets and PostgreSQL for robust database management. This project was developed to explore the intersection of AI and emotional wellbeing, offering users a safe space to express their concerns and receive supportive responses.
@@ -11,7 +7,8 @@ Below is a comprehensive `README.md` file for your project, "Interactive Chatbot
 - **Pranil Parajuli**  
 - **Raj Simkhada**  
 - **Sugam Dahal**  
-*Department of [Your Department], [Your University], [Location]*
+- **Department of Electronics and Computer Engineering**
+- **Thapathali Campus, Kathmandu**
 
 ## Project Motivation
 The rapid evolution of artificial intelligence (AI) technologies has opened avenues for addressing critical social challenges, including emotional isolation and loneliness. In a world where people often feel disconnected despite being digitally connected, there is a rising need for innovative solutions that foster emotional support. Many individuals, especially those who live alone or face social challenges, may lack meaningful interactions, resulting in adverse effects on mental health. The motivation for this project arises from the potential of AI to act as a bridge in providing companionship to those in need. Unlike conventional chatbots that deliver transactional responses, a human-companion chatbot focuses on empathy and understanding. This aligns with the increasing demand for AI systems that can analyze emotions and adapt to user sentiments.
@@ -227,13 +224,3 @@ This project is licensed under the [MIT License](LICENSE).
 
 For more details, explore the repository or contact the team!
 
----
-
-### Notes on Assumptions:
-- **Project Name**: Used "Interactive Chatbot for Mental Wellbeing" as provided.
-- **Deployment**: Assumed local hosting since no deployment URLs were given.
-- **Styling**: Inferred Tailwind CSS usage based on class names like `bg-gray-200` in `Chatbot.tsx`.
-- **Department/University**: Left placeholders; please replace with your actual details.
-- **Future Enhancements**: Added based on your motivation and typical chatbot evolution paths.
-
-This README emphasizes the database as requested, detailing each table’s structure and purpose, while also providing a polished overview of the project. Let me know if you’d like adjustments!
