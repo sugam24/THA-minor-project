@@ -2,8 +2,6 @@
 
 **Interactive Chatbot for Mental Wellbeing** is an innovative AI-powered platform designed to provide empathetic, contextually aware mental health support. Built as a single-repository project, it integrates a TypeScript-based frontend and a Flask-powered backend, leveraging GPT-2 fine-tuned on mental health datasets and PostgreSQL for robust database management. This project was developed to explore the intersection of AI and emotional wellbeing, offering users a safe space to express their concerns and receive supportive responses.
 
-![Chatbot User Interface](screenshots/chatbot_response.png)
-
 ## Team Members
 - **Amrita Shahi** ([@amrita_shahi](https://github.com/amrita_shahi))  
 - **Pranil Parajuli** ([@praniil](https://github.com/praniil))  
@@ -167,6 +165,7 @@ Follow these steps to set up the project locally:
 
 ## Usage
 - **Register/Login**: Create an account or log in to access the chatbot.
+  ![Register page](screenshots/register_page.png)
 - **Chat**: Type a message or select a predefined question to start a conversation.
 - **Feedback/Rating**: Submit feedback or rate the chatbot via the sidebar options.
 - Use tools like Postman to test API endpoints (e.g., `/post_userinput`, `/submit_feedback`).
