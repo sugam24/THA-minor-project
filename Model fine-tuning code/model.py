@@ -1,3 +1,6 @@
+//This is the code for fine-tuning the GPT-2 model on a combined dataset of mental health-related conversations. The code loads multiple datasets from Hugging Face, preprocesses and tokenizes the data, and fine-tunes the GPT-2 model on the combined dataset. The trained model is then saved for future use. Remember to use the correct file path for the model. This is just the code. This code doesn't impact the project.
+
+
 from datasets import load_dataset
 from transformers import AutoTokenizer, Trainer, TrainingArguments, GPT2LMHeadModel
 from datasets import concatenate_datasets
